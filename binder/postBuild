@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Install mysql-server
+# root user will have no/blank password
+# DEBIAN_FRONTEND=noninteractive apt-get -y install mysql-server
+
+# Download and install the MySQL example employees database
+# c.f. https://github.com/datacharmer/test_db
+git clone --depth 1 https://github.com/datacharmer/test_db.git datbases/test_db
+cd datbases/test_db
+printf "\n### Start MySQL server\n### sudo /etc/init.d/mysql start\n"
+sudo /etc/init.d/mysql start
+printf "\n### mysql -u root < employees.sql\n"
+mysql -u root < employees.sql
+cd -
+
+# Add jovyan as user
+printf "\n### mysql -u root < binder/add_user.sql\n"
+mysql -u root < binder/add_user.sql
+
+# Install jupyterlab-sql extension
+pip install --upgrade -e .
+jupyter serverextension enable jupyterlab_sql --py --sys-prefix
+jupyter lab build
