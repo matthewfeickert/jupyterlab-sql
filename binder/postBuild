@@ -8,8 +8,9 @@
 # c.f. https://github.com/datacharmer/test_db
 git clone --depth 1 https://github.com/datacharmer/test_db.git datbases/test_db
 cd datbases/test_db
-printf "\n### Start MySQL server\n### /etc/init.d/mysql start\n"
-/etc/init.d/mysql start
+printf "\n### Start MySQL server\n### mysql.server start\n"
+# /etc/init.d/mysql start
+mysql.server start
 printf "\n### mysql -u root < employees.sql\n"
 mysql -u root < employees.sql
 cd -
