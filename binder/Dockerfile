@@ -44,7 +44,9 @@ RUN git clone --depth 1 https://github.com/datacharmer/test_db.git datbases/test
     cd ${HOME} && \
     printf "\n### Add jovyan as MySQL user\n### mysql -u root < binder/add_user.sql\n" && \
     mysql -u root < binder/add_user.sql && \
-    chown -R ${USER} /etc/init.d/mysql
+    echo "${USER} ALL=/sbin//etc/init.d/mysql start" >> /etc/sudoers && \
+    echo "${USER} ALL=/sbin//etc/init.d/mysql stop" >> /etc/sudoers && \
+    echo "${USER} ALL=/sbin//etc/init.d/mysql restart" >> /etc/sudoers
 
 # Install the notebook package and install jupyterlab-sql extension
 RUN pip install --no-cache --upgrade pip setuptools wheel && \
